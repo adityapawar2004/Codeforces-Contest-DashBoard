@@ -1,23 +1,23 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { 
-  Page, 
-  Card, 
-  DataTable, 
-  Pagination, 
+import {
+  Page,
+  Card,
+  DataTable,
+  Pagination,
   Button,
   Icon,
-  EmptyState  // Added for empty state
+  EmptyState
 } from '@shopify/polaris';
 import { AiOutlineStar, AiFillStar } from 'react-icons/ai';
 
 
-import { 
-  filterContests, 
-  getPaginatedContests, 
+import {
+  filterContests,
+  getPaginatedContests,
   formatTimestamp,
   getFavorites,
-  toggleFavorite 
+  toggleFavorite
 } from '../utils/helpers';
 import { fetchContests } from '../services/api';
 import { useDebounce } from '../hooks/useDebounce';
@@ -34,7 +34,7 @@ function ContestList() {
   const [contestType, setContestType] = useState('');
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  
+
   const debouncedSearchTerm = useDebounce(searchTerm);
   const navigate = useNavigate();
   const [phase, setPhase] = useState('');
@@ -49,18 +49,18 @@ function ContestList() {
   const handlePhaseChange = (value) => {
     setPhase(value);
   };
-  // Update the filtering logic
+
   useEffect(() => {
     const filtered = filterContests(
-      contests, 
-      debouncedSearchTerm, 
-      contestType, 
+      contests,
+      debouncedSearchTerm,
+      contestType,
       phase,
       showFavorites
     );
     setFilteredContests(filtered);
     setPage(1);
-  }, [debouncedSearchTerm, contestType, phase, contests,showFavorites]);
+  }, [debouncedSearchTerm, contestType, phase, contests, showFavorites]);
   const handleFavoriteToggle = (contestId) => {
     const updatedFavorites = toggleFavorite(contestId);
     setFavorites(updatedFavorites);
@@ -79,7 +79,7 @@ function ContestList() {
     let filtered = contests;
 
     if (debouncedSearchTerm) {
-      filtered = filtered.filter(contest => 
+      filtered = filtered.filter(contest =>
         contest.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
       );
     }
@@ -110,7 +110,7 @@ function ContestList() {
         }}
         plain
       />
-      <span 
+      <span
         onClick={() => navigate(`/contest/${contest.id}`)}
         style={{ cursor: 'pointer', color: '#2c6ecb' }}
       >
@@ -122,22 +122,23 @@ function ContestList() {
     formatTimestamp(contest.startTimeSeconds),
   ]
 
-);
+  );
   return (
-    <Page title="Codeforces Contest Dashboard">
-     <div style={{ 
-      display: 'flex', 
+    <div style={{
+      display: 'flex',
       gap: '20px',
       flexDirection: window.innerWidth <= 768 ? 'column' : 'row',
-     width:"1800px"
-      
-    }}>
-    <div style={{ 
+      width: "1800px", 
+      alignItems: "center",
+      justifyContent: "center",
+    }}> <Page title="Codeforces Contest Dashboard">
+
+        <div style={{
           flex: window.innerWidth <= 768 ? '1' : '3',
           minWidth: 0
         }}>
           <Card sectioned>
-            <Filters 
+            <Filters
               searchTerm={searchTerm}
               onSearchChange={handleSearchChange}
               contestType={contestType}
@@ -158,7 +159,7 @@ function ContestList() {
                 <p>Click the star icon next to a contest to add it to your favorites.</p>
               </EmptyState>
             ) : (
-              <div style={{ 
+              <div style={{
                 maxHeight: pageSize > 10 ? '600px' : 'none',
                 overflowY: pageSize > 10 ? 'auto' : 'visible',
                 overflowX: 'auto'
@@ -182,8 +183,9 @@ function ContestList() {
           </Card>
         </div>
 
-      {/* Graph section */}
-      <div style={{ 
+
+      </Page>
+      <div style={{
         flex: window.innerWidth <= 768 ? '1' : '2',
         minWidth: 0
       }}>
@@ -192,7 +194,8 @@ function ContestList() {
         </Card>
       </div>
     </div>
-  </Page>
+
+
   );
 }
 

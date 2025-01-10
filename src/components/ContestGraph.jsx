@@ -10,10 +10,10 @@ import {
   
   function ContestGraph({ contests }) {
     const data = contests
-      .slice(0, 20) // Show only first 20 contests for better visibility
+      .slice(0, 20)
       .map(contest => ({
         name: contest.name.substring(0, 20) + '...',
-        duration: contest.durationSeconds / 3600, // Convert to hours
+        duration: contest.durationSeconds / 3600, 
       }));
   
     return (

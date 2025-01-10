@@ -59,8 +59,8 @@ function Filters({
                 onChange={onPhaseChange}
               />
             </div>
-            <div style={{ flex: '1 1 150px', minWidth: '120px' }}>
-              <Select
+            <div style={{ flex: '1 1 100px', minWidth: '120px' }}>
+              <Select style={{width:"fit-content"}}
                 label="Items per page"
                 options={[
                   { label: '10', value: '10' },

@@ -1,9 +1,9 @@
-// Convert seconds to hours
+
 export const secondsToHours = (seconds) => {
     return seconds / 3600;
   };
   
-  // Format timestamp to local date string
+
   export const formatTimestamp = (timestamp) => {
     return new Date(timestamp * 1000).toLocaleString();
   };
@@ -20,7 +20,6 @@ export const secondsToHours = (seconds) => {
     return updatedFavorites;
   };
   
-  // Filter contests based on search term, type, and phase
   export const filterContests = (contests, searchTerm, type, phase, showFavorites) => {
     const favorites = getFavorites();
     
@@ -45,7 +44,7 @@ export const secondsToHours = (seconds) => {
     });
   };
   
-  // Sort contests by a given field
+
   export const sortContests = (contests, field, direction = 'asc') => {
     return [...contests].sort((a, b) => {
       const valueA = a[field];
@@ -58,14 +57,14 @@ export const secondsToHours = (seconds) => {
     });
   };
   
-  // Get paginated contests
+
   export const getPaginatedContests = (contests, page, pageSize) => {
     const startIndex = (page - 1) * pageSize;
     const endIndex = startIndex + pageSize;
     return contests.slice(startIndex, endIndex);
   };
   
-  // Local storage helpers
+
   export const saveToLocalStorage = (key, value) => {
     try {
       localStorage.setItem(key, JSON.stringify(value));
@@ -83,8 +82,7 @@ export const secondsToHours = (seconds) => {
       return defaultValue;
     }
   };
-  
-  // Format contest duration for display
+
   export const formatDuration = (seconds) => {
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
