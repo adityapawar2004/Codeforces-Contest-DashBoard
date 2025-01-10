@@ -1,33 +1,32 @@
 import {
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  CartesianGrid,
-} from 'recharts';
-
-function ContestGraph({ contests }) {
-  const data = contests.map(contest => ({
-    name: contest.name.length > 20 
-      ? contest.name.substring(0, 20) + '...'
-      : contest.name,
-    duration: contest.durationSeconds / 3600,
-  }));
-
-  return (
-    <div style={{ 
-      width: '100%', 
-      height: '400px',
-      maxWidth: '100%',
-      overflow: 'hidden'
-    }}>
-      <ResponsiveContainer width="100%" height="100%">
-        <BarChart 
-          data={data}
+    ResponsiveContainer,
+    BarChart,
+    Bar,
+    XAxis,
+    YAxis,
+    Tooltip,
+    CartesianGrid,
+  } from 'recharts';
+  
+  function ContestGraph({ contests }) {
+    const data = contests
+      .slice(0, 20) // Show only first 20 contests for better visibility
+      .map(contest => ({
+        name: contest.name.substring(0, 20) + '...',
+        duration: contest.durationSeconds / 3600, // Convert to hours
+      }));
+  
+    return (
+      <div style={{ 
+        width: '100%', 
+        height: '400px',
+        maxWidth: '100%',
+        overflow: 'hidden'
+      }}>
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart  data={data}
           margin={{
-            top: 20,
+            top: 10,
             right: 30,
             left: 20,
             bottom: 70

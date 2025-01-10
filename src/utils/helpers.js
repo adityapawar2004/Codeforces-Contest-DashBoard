@@ -7,9 +7,23 @@ export const secondsToHours = (seconds) => {
   export const formatTimestamp = (timestamp) => {
     return new Date(timestamp * 1000).toLocaleString();
   };
+  export const getFavorites = () => {
+    return getFromLocalStorage('favoriteContests', []);
+  };
+  export const toggleFavorite = (contestId) => {
+    const favorites = getFavorites();
+    const updatedFavorites = favorites.includes(contestId)
+      ? favorites.filter(id => id !== contestId)
+      : [...favorites, contestId];
+    
+    saveToLocalStorage('favoriteContests', updatedFavorites);
+    return updatedFavorites;
+  };
   
   // Filter contests based on search term, type, and phase
-  export const filterContests = (contests, searchTerm, type, phase) => {
+  export const filterContests = (contests, searchTerm, type, phase, showFavorites) => {
+    const favorites = getFavorites();
+    
     return contests.filter(contest => {
       const matchesSearch = searchTerm 
         ? contest.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -23,7 +37,11 @@ export const secondsToHours = (seconds) => {
         ? contest.phase === phase 
         : true;
   
-      return matchesSearch && matchesType && matchesPhase;
+      const matchesFavorites = showFavorites 
+        ? favorites.includes(contest.id)
+        : true;
+  
+      return matchesSearch && matchesType && matchesPhase && matchesFavorites;
     });
   };
   
@@ -71,10 +89,13 @@ export const secondsToHours = (seconds) => {
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
     
-    if (hours === 0) {
-      return `${minutes} minutes`;
+    let duration = '';
+    if (hours > 0) {
+      duration += `${hours} hour${hours !== 1 ? 's' : ''}`;
     }
-    return minutes === 0 
-      ? `${hours} hours` 
-      : `${hours} hours ${minutes} minutes`;
+    if (minutes > 0) {
+      if (duration) duration += ' ';
+      duration += `${minutes} minute${minutes !== 1 ? 's' : ''}`;
+    }
+    return duration || '0 minutes';
   };

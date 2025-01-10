@@ -1,4 +1,4 @@
-import { LegacyStack, Select, TextField,BlockStack,Box } from '@shopify/polaris';
+import { LegacyStack, Select, TextField,BlockStack,Box ,Checkbox} from '@shopify/polaris';
 
 function Filters({ 
   searchTerm, 
@@ -7,8 +7,10 @@ function Filters({
   onTypeChange, 
   phase, 
   onPhaseChange,
-  pageSize,        // Add these new props
-  onPageSizeChange 
+  pageSize,
+  onPageSizeChange,
+  showFavorites,
+  onFavoritesChange
 }) {
  
   return (
@@ -16,9 +18,10 @@ function Filters({
       <BlockStack gap="4">
         <Box>
           <div style={{ 
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: '1rem'
+           display: 'flex',
+           flexWrap: 'wrap',
+           gap: '1rem',
+           alignItems: 'flex-end'
           }}>
             <div style={{ flex: '1 1 300px', minWidth: '250px' }}>
               <TextField
@@ -67,6 +70,13 @@ function Filters({
                 ]}
                 value={pageSize.toString()}
                 onChange={(value) => onPageSizeChange(parseInt(value))}
+              />
+            </div>
+            <div style={{ flex: '0 1 auto', minWidth: '150px' }}>
+              <Checkbox
+                label="Show Favorites Only"
+                checked={showFavorites}
+                onChange={onFavoritesChange}
               />
             </div>
           </div>

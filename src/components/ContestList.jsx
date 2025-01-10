@@ -1,27 +1,34 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-    Page,
-    Card,
-    DataTable,
-    Pagination,
-    Select,
-    TextField,
+import { 
+  Page, 
+  Card, 
+  DataTable, 
+  Pagination, 
+  Button,
+  Icon,
+  EmptyState  // Added for empty state
+} from '@shopify/polaris';
+import { AiOutlineStar, AiFillStar } from 'react-icons/ai';
 
-    LegacyStack,
-  } from '@shopify/polaris';
+
+import { 
+  filterContests, 
+  getPaginatedContests, 
+  formatTimestamp,
+  getFavorites,
+  toggleFavorite 
+} from '../utils/helpers';
 import { fetchContests } from '../services/api';
 import { useDebounce } from '../hooks/useDebounce';
 import ContestGraph from './ContestGraph';
 import Filters from './Filters';
-import { 
-    filterContests, 
-    getPaginatedContests, 
-    formatTimestamp 
-  } from '../utils/helpers';
+
 
 function ContestList() {
   const [contests, setContests] = useState([]);
+  const [favorites, setFavorites] = useState(getFavorites());
+  const [showFavorites, setShowFavorites] = useState(false);
   const [filteredContests, setFilteredContests] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [contestType, setContestType] = useState('');
@@ -48,11 +55,17 @@ function ContestList() {
       contests, 
       debouncedSearchTerm, 
       contestType, 
-      phase
+      phase,
+      showFavorites
     );
     setFilteredContests(filtered);
     setPage(1);
-  }, [debouncedSearchTerm, contestType, phase, contests]);
+  }, [debouncedSearchTerm, contestType, phase, contests,showFavorites]);
+  const handleFavoriteToggle = (contestId) => {
+    const updatedFavorites = toggleFavorite(contestId);
+    setFavorites(updatedFavorites);
+  };
+
   useEffect(() => {
     const loadContests = async () => {
       const data = await fetchContests();
@@ -80,21 +93,36 @@ function ContestList() {
   }, [debouncedSearchTerm, contestType, contests]);
 
   const paginatedContests = getPaginatedContests(filteredContests, page, pageSize);
-
   const rows = paginatedContests.map(contest => [
     contest.id,
-    <span 
-      key={contest.id}
-      onClick={() => navigate(`/contest/${contest.id}`)}
-      style={{ cursor: 'pointer', color: '#2c6ecb' }}
-    >
-      {contest.name}
-    </span>,
+    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+      <Button
+        icon={
+          favorites.includes(contest.id) ? (
+            <AiFillStar size={20} color="yellow" />
+          ) : (
+            <AiOutlineStar size={20} color="yellow" />
+          )
+        }
+        onClick={(e) => {
+          e.stopPropagation();
+          handleFavoriteToggle(contest.id);
+        }}
+        plain
+      />
+      <span 
+        onClick={() => navigate(`/contest/${contest.id}`)}
+        style={{ cursor: 'pointer', color: '#2c6ecb' }}
+      >
+        {contest.name}
+      </span>
+    </div>,
     contest.type,
     contest.phase,
     formatTimestamp(contest.startTimeSeconds),
-  ]);
+  ]
 
+);
   return (
     <Page title="Codeforces Contest Dashboard">
      <div style={{ 
@@ -104,44 +132,55 @@ function ContestList() {
      width:"1800px"
       
     }}>
-      <div style={{ 
-        flex: window.innerWidth <= 768 ? '1' : '3',
-        minWidth: 0
-      }}>
-        <Card sectioned>
-          <Filters 
-            searchTerm={searchTerm}
-            onSearchChange={handleSearchChange}
-            contestType={contestType}
-            onTypeChange={handleTypeChange}
-            phase={phase}
-            onPhaseChange={handlePhaseChange}
-            pageSize={pageSize}
-            onPageSizeChange={setPageSize}
-          />
-
-          <div style={{ 
-            maxHeight: pageSize > 10 ? '600px' : 'none',
-            overflowY: pageSize > 10 ? 'auto' : 'visible',
-            overflowX: 'auto'
-          }}>
-            <DataTable
-              columnContentTypes={['numeric', 'text', 'text', 'text', 'text']}
-              headings={['ID', 'Name', 'Type', 'Phase', 'Start Time']}
-              rows={rows}
+    <div style={{ 
+          flex: window.innerWidth <= 768 ? '1' : '3',
+          minWidth: 0
+        }}>
+          <Card sectioned>
+            <Filters 
+              searchTerm={searchTerm}
+              onSearchChange={handleSearchChange}
+              contestType={contestType}
+              onTypeChange={handleTypeChange}
+              phase={phase}
+              onPhaseChange={handlePhaseChange}
+              pageSize={pageSize}
+              onPageSizeChange={setPageSize}
+              showFavorites={showFavorites}
+              onFavoritesChange={() => setShowFavorites(!showFavorites)}
             />
-          </div>
 
-          <div style={{ marginTop: '1rem' }}>
-            <Pagination
-              hasPrevious={page > 1}
-              onPrevious={() => setPage(p => p - 1)}
-              hasNext={page * pageSize < filteredContests.length}
-              onNext={() => setPage(p => p + 1)}
-            />
-          </div>
-        </Card>
-      </div>
+            {showFavorites && filteredContests.length === 0 ? (
+              <EmptyState
+                heading="No favorite contests yet"
+                image=""
+              >
+                <p>Click the star icon next to a contest to add it to your favorites.</p>
+              </EmptyState>
+            ) : (
+              <div style={{ 
+                maxHeight: pageSize > 10 ? '600px' : 'none',
+                overflowY: pageSize > 10 ? 'auto' : 'visible',
+                overflowX: 'auto'
+              }}>
+                <DataTable
+                  columnContentTypes={['numeric', 'text', 'text', 'text', 'text']}
+                  headings={['ID', 'Name', 'Type', 'Phase', 'Start Time']}
+                  rows={rows}
+                />
+              </div>
+            )}
+
+            <div style={{ marginTop: '1rem' }}>
+              <Pagination
+                hasPrevious={page > 1}
+                onPrevious={() => setPage(p => p - 1)}
+                hasNext={page * pageSize < filteredContests.length}
+                onNext={() => setPage(p => p + 1)}
+              />
+            </div>
+          </Card>
+        </div>
 
       {/* Graph section */}
       <div style={{ 

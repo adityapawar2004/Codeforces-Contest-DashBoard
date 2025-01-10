@@ -42,7 +42,7 @@
   color: #888;
 }
 
-/* Add these responsive styles */
+
 @media screen and (max-width: 768px) {
   #root {
     padding: 1rem;
@@ -77,4 +77,89 @@
 .Polaris-DataTable__ScrollContainer {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+}
+
+/* Add these dark mode styles */
+:root {
+  --background-color: #ffffff;
+  --text-color: #202223;
+  --card-background: #ffffff;
+  --border-color: #dfe3e8;
+  --table-background: #f9f9f9;
+}
+
+[data-theme='dark'] {
+  --background-color: #121212;
+  --text-color: #e0e0e0;
+  --card-background: #1f1f1f;
+  --border-color: #444;
+  --table-background: #2a2a2a;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: all 0.3s ease;
+}
+
+.Polaris-Card {
+  background-color: var(--card-background);
+  border-color: var(--border-color);
+}
+
+.Polaris-Page {
+  background-color: var(--background-color);
+}
+
+/* Table styles */
+.Polaris-DataTable {
+  background-color: var(--table-background);
+}
+
+.Polaris-DataTable__ScrollContainer {
+  background-color: var(--table-background);
+}
+
+/* Graph styles */
+.recharts-tooltip {
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+}
+
+.recharts-bar {
+  fill: #4caf50;
+}
+
+/* Add any additional styles as needed */
+
+/* Custom Scrollbar Styles */
+
+/* For Webkit browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 12px; /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: var(--table-background); /* Background of the scrollbar track */
+  border-radius: 10px; /* Rounded corners for the track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4caf50; /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Rounded corners for the thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #388e3c; /* Darker color on hover */
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin; /* Thin scrollbar */
+  scrollbar-color: #4caf50 var(--table-background); /* Thumb color and track color */
+}
+
+/* Optional: Add hover effect for Firefox */
+*::-webkit-scrollbar-thumb:hover {
+  background: #388e3c; /* Darker color on hover */
 }
