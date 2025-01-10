@@ -50,7 +50,7 @@ function Filters({
               <Select
                 label="Status"
                 options={[
-                  { label: 'All Statuses', value: '' },
+                  { label: 'All Status', value: '' },
                   { label: 'Upcoming', value: 'BEFORE' },
                   { label: 'In Progress', value: 'CODING' },
                   { label: 'Finished', value: 'FINISHED' },

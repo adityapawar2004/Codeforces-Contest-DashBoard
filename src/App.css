@@ -81,11 +81,11 @@
 
 /* Add these dark mode styles */
 :root {
-  --background-color: #ffffff;
-  --text-color: #202223;
-  --card-background: #ffffff;
-  --border-color: #dfe3e8;
-  --table-background: #f9f9f9;
+  --background-color: #121212;
+  --text-color: #e0e0e0;
+  --card-background: #1f1f1f;
+  --border-color: #444;
+  --table-background: #2a2a2a;
 }
 
 [data-theme='dark'] {
@@ -130,7 +130,16 @@ body {
   fill: #4caf50;
 }
 
-/* Add any additional styles as needed */
+/* Additional styles for inputs and selects */
+input, select, textarea {
+  background-color: #333;
+  color: #e0e0e0;
+  border: 1px solid #444;
+}
+
+input::placeholder, select::placeholder, textarea::placeholder {
+  color: #aaa;
+}
 
 /* Custom Scrollbar Styles */
 
@@ -140,7 +149,7 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--table-background); /* Background of the scrollbar track */
+  background: #2a2a2a; /* Background of the scrollbar track */
   border-radius: 10px; /* Rounded corners for the track */
 }
 
@@ -156,10 +165,133 @@ body {
 /* For Firefox */
 * {
   scrollbar-width: thin; /* Thin scrollbar */
-  scrollbar-color: #4caf50 var(--table-background); /* Thumb color and track color */
+  scrollbar-color: #4caf50 #2a2a2a; /* Thumb color and track color */
 }
 
 /* Optional: Add hover effect for Firefox */
 *::-webkit-scrollbar-thumb:hover {
   background: #388e3c; /* Darker color on hover */
+}
+
+@media (max-width: 768px) {
+  .Polaris-DataTable {
+    font-size: 14px; /* Adjust font size for smaller screens */
+  }
+
+  .Polaris-Card {
+    margin-bottom: 1rem; /* Add margin for better spacing */
+  }
+
+  .Polaris-Page {
+    padding: 0 0.5rem; /* Adjust padding for smaller screens */
+  }
+}
+
+/* Media query for tablet and mobile views */
+@media (max-width: 1024px) { /* Adjust this value as needed for tablet */
+  .Polaris-DataTable {
+    font-size: 14px; /* Adjust font size for smaller screens */
+  }
+
+  .Polaris-Card {
+    margin-bottom: 1rem; /* Add margin for better spacing */
+  }
+
+  .Polaris-Page {
+    padding: 0 0.5rem; /* Adjust padding for smaller screens */
+  }
+
+  /* Flexbox adjustments for ContestList */
+  .contest-list-container {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    gap: 20px; /* Space between elements */
+  }
+
+  .contest-filters {
+    flex: 1; /* Allow filters to take full width */
+  }
+
+  .contest-graph {
+    flex: 1; /* Allow graph to take full width */
+  }
+}
+
+/* Media query for mobile views */
+@media (max-width: 768px) {
+  .Polaris-DataTable {
+    font-size: 14px; /* Adjust font size for smaller screens */
+  }
+
+  .Polaris-Card {
+    margin-bottom: 1rem; /* Add margin for better spacing */
+  }
+
+  .Polaris-Page {
+    padding: 0 0.5rem; /* Adjust padding for smaller screens */
+  }
+
+  /* Flexbox adjustments for ContestList */
+  .contest-list-container {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    gap: 20px; /* Space between elements */
+  }
+
+  .contest-filters {
+    width: 100%; /* Ensure filters take full width */
+    margin-bottom: 1rem; /* Add margin for spacing */
+  }
+
+  .contest-graph {
+    width: 100%; /* Ensure graph takes full width */
+  }
+
+  .Polaris-Card {
+    margin-bottom: 1rem; /* Add margin for better spacing */
+  }
+}
+
+/* Flexbox adjustments for ContestList */
+.contest-list-container {
+  display: flex;
+  flex-direction: row; /* Default to row for desktop */
+  gap: 20px; /* Space between elements */
+  overflow: hidden; /* Prevent overflow */
+}
+
+.contest-filters {
+  flex: 3; /* Allow filters to take more space */
+  min-width: 300px; /* Ensure a minimum width for filters */
+}
+
+.contest-graph {
+  flex: 2; /* Allow graph to take less space */
+}
+
+/* Media query for tablet and mobile views */
+@media (max-width: 1024px) { /* Tablet view */
+  .contest-list-container {
+    flex-direction: column; /* Stack elements vertically */
+  }
+}
+
+/* Media query for mobile views */
+@media (max-width: 768px) {
+  .contest-list-container {
+    flex-direction: column; /* Stack elements vertically */
+  }
+
+  .contest-filters {
+    width: 100%; /* Ensure filters take full width */
+    margin-bottom: 1rem; /* Add margin for spacing */
+  }
+
+  .contest-graph {
+    width: 100%; /* Ensure graph takes full width */
+  }
+
+  .Polaris-Card {
+    margin-bottom: 1rem; /* Add margin for better spacing */
+  }
 }
