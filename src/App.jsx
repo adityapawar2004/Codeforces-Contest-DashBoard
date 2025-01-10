@@ -10,6 +10,7 @@ function App() {
     <AppProvider i18n={enTranslations}>
       <BrowserRouter>
         <Routes>
+          
           <Route path="/" element={<ContestList />} />
           <Route path="/contest/:id" element={<ContestDetails />} />
         </Routes>

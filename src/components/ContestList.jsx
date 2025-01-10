@@ -101,6 +101,16 @@ function ContestList() {
 
   return (
     <Page title="Codeforces Contest Dashboard">
+        <div style={{ 
+        display: 'flex', 
+        gap: '20px',
+        flexDirection: window.innerWidth <= 768 ? 'column' : 'row',
+        width:"1500px"
+      }}>
+        <div style={{ 
+          flex: window.innerWidth <= 768 ? '1' : '3',
+          minWidth: 0 // Prevents flex items from overflowing
+        }}>
       <Card sectioned>
       <Filters 
           searchTerm={searchTerm}
@@ -131,26 +141,7 @@ function ContestList() {
             />
           </LegacyStack>
         </LegacyStack>
-        <div style={{ marginBottom: '1rem' }}>
-          <Filters>
-            <TextField
-              label="Search contests"
-              value={searchTerm}
-              onChange={setSearchTerm}
-              autoComplete="off"
-            />
-            <Select
-              label="Contest type"
-              options={[
-                { label: 'All', value: '' },
-                { label: 'CF', value: 'CF' },
-                { label: 'ICPC', value: 'ICPC' },
-              ]}
-              value={contestType}
-              onChange={setContestType}
-            />
-          </Filters>
-        </div>
+       
 
         <DataTable
           columnContentTypes={['numeric', 'text', 'text', 'text', 'text']}
@@ -167,10 +158,16 @@ function ContestList() {
           />
         </div>
       </Card>
-
-      <Card sectioned title="Contest Duration Analysis">
-        <ContestGraph contests={filteredContests} />
-      </Card>
+</div>
+<div style={{ 
+          flex: window.innerWidth <= 768 ? '1' : '2',
+          minWidth: 0
+        }}>
+          <Card sectioned title="Contest Duration Analysis">
+            <ContestGraph contests={filteredContests} />
+          </Card>
+        </div>
+        </div>
     </Page>
   );
 }

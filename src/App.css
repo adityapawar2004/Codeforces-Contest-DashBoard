@@ -1,8 +1,9 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 0 0 auto;
   padding: 2rem;
-  text-align: center;
+  box-sizing: border-box;
 }
 
 .logo {
@@ -39,4 +40,41 @@
 
 .read-the-docs {
   color: #888;
+}
+
+/* Add these responsive styles */
+@media screen and (max-width: 768px) {
+  #root {
+    padding: 1rem;
+  }
+
+  .Polaris-Page {
+    padding: 0 0.5rem;
+  }
+
+  .Polaris-Card {
+    margin-bottom: 1rem;
+  }
+
+  .Polaris-DataTable {
+    font-size: 14px;
+  }
+
+  .Polaris-DataTable__ScrollContainer {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Ensure the app takes full width on mobile */
+#root {
+  max-width: 100%;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* Improve table responsiveness */
+.Polaris-DataTable__ScrollContainer {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }

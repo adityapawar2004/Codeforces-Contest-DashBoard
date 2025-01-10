@@ -17,9 +17,20 @@ import {
       }));
   
     return (
-      <div style={{ width: '100%', height: 400 }}>
-        <ResponsiveContainer>
-          <BarChart data={data}>
+      <div style={{ 
+        width: '100%', 
+        height: '400px',
+        maxWidth: '100%',
+        overflow: 'hidden'
+      }}>
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart  data={data}
+          margin={{
+            top: 10,
+            right: 30,
+            left: 50,
+            bottom: 150
+          }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" angle={-45} textAnchor="end" />
             <YAxis label={{ value: 'Duration (hours)', angle: -90, position: 'insideLeft' }} />
