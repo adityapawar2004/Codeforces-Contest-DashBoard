@@ -97,13 +97,13 @@ function ContestList() {
 
   return (
     <Page title="Codeforces Contest Dashboard">
-    <div style={{ 
+     <div style={{ 
       display: 'flex', 
       gap: '20px',
       flexDirection: window.innerWidth <= 768 ? 'column' : 'row',
-      width:"1600px"
+     width:"1800px"
+      
     }}>
-      {/* List section */}
       <div style={{ 
         flex: window.innerWidth <= 768 ? '1' : '3',
         minWidth: 0
@@ -116,14 +116,21 @@ function ContestList() {
             onTypeChange={handleTypeChange}
             phase={phase}
             onPhaseChange={handlePhaseChange}
+            pageSize={pageSize}
+            onPageSizeChange={setPageSize}
           />
 
-
-          <DataTable
-            columnContentTypes={['numeric', 'text', 'text', 'text', 'text']}
-            headings={['ID', 'Name', 'Type', 'Phase', 'Start Time']}
-            rows={rows}
-          />
+          <div style={{ 
+            maxHeight: pageSize > 10 ? '600px' : 'none',
+            overflowY: pageSize > 10 ? 'auto' : 'visible',
+            overflowX: 'auto'
+          }}>
+            <DataTable
+              columnContentTypes={['numeric', 'text', 'text', 'text', 'text']}
+              headings={['ID', 'Name', 'Type', 'Phase', 'Start Time']}
+              rows={rows}
+            />
+          </div>
 
           <div style={{ marginTop: '1rem' }}>
             <Pagination

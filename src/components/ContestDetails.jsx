@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Page, Card, Button } from '@shopify/polaris';
+import { Page, Card } from '@shopify/polaris';
 import { fetchContests } from '../services/api';
 
 function ContestDetails() {
